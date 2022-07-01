@@ -69,7 +69,7 @@
     data: () => ({
       story: "123456",
       title: "a happy day",
-      abstract: "Mike has a happy day.",
+      abstract: "Mike has a happy day. He drank milk this day.",
       body: "Mike really has a happy day.",
     }),
     watch: {
