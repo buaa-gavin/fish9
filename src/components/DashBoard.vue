@@ -68,7 +68,7 @@
 
     data: () => ({
       story: "123456",
-      title: "happy day",
+      title: "a happy day",
       abstract: "Mike has a happy day.",
       body: "Mike really has a happy day.",
     }),
