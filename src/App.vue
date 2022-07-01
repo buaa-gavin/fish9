@@ -1,28 +1,48 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          src="https://picgo-1301039224.cos.ap-beijing.myqcloud.com/202207011510098.png"
+          transition="scale-transition"
+          width="100"
+        />
+
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        target="_blank"
+        text
+      >
+        <span class="mr-2">login</span>
+        <!-- <v-icon>mdi-open-in-new</v-icon> -->
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <DashBoard/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DashBoard from './components/DashBoard';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    DashBoard
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
