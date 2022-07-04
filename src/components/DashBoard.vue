@@ -36,6 +36,11 @@
       >
         <v-row>
           <v-col>
+            <v-skeleton-loader
+            :loading='loading'
+            :boilerplate="boilerplate"
+            type="list-item-two-line"
+          >
             <v-textarea
               value="12345xxxxx"
               label="title"
@@ -45,6 +50,7 @@
               v-model="title"
             >
             </v-textarea>
+          </v-skeleton-loader>
           </v-col>
         </v-row>
         <v-row>
@@ -85,6 +91,9 @@ import _axios from '@/plugins/axios'
       title: "a happy day",
       abstract: "Mike has a happy day. He drank milk this day.",
       body: "Mike really has a happy day.",
+      loading:false,
+      boilerplate:true,
+      transition: 'scale-transition',
     }),
     watch: {
       story: function (newInput) {
@@ -100,11 +109,13 @@ import _axios from '@/plugins/axios'
 
       },
       generate: function() {
+        this.loading=true,
         _axios.post('/article/generate', {
           'content': this.story
         }).then((response) => {
           this.title = response.data.title
           this.abstract = response.data.summary
+          this.loading=false
         })
         
       }
