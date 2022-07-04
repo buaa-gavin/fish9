@@ -9,14 +9,21 @@
           <v-textarea
             clearable
             counter
-            rows="15"
+            rows="16"
             clear-icon="mdi-close-circle"
             label="story"
-            height="450"
+            outlined
+            no-resize
+            height="440"
             v-model="story"
           >
           
           </v-textarea>
+          <v-btn
+            elevation="2"
+            @click="generate"
+            >generate
+          </v-btn>
           <v-btn
             elevation="2"
             @click="copytoclipboard"
@@ -32,6 +39,9 @@
             <v-textarea
               value="12345xxxxx"
               label="title"
+              rows="4"
+              outlined
+              no-resize
               v-model="title"
             >
             </v-textarea>
@@ -41,13 +51,16 @@
           <v-col>
             <v-textarea
               value="12345xxxxx"
+              rows="9"
               label="asbtract"
+              outlined
+              no-resize
               v-model="abstract"
             >
             </v-textarea>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col>
             <v-textarea
               value="12345xxxxx"
@@ -56,13 +69,14 @@
             >
             </v-textarea>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import _axios from '@/plugins/axios'
   export default {
     name: 'DashBoard',
 
@@ -84,6 +98,15 @@
                       + "body: " + this.body + "\n"
         navigator.clipboard.writeText(copyData)
 
+      },
+      generate: function() {
+        _axios.post('/article/generate', {
+          'content': 'helo'
+        }).then(function (response) {
+          console.log('res>>>' + response)
+          this.title = response.data.summary
+          this.abstract = response.data.abstract
+        })
       }
     }
   }
