@@ -100,13 +100,20 @@ import _axios from '@/plugins/axios'
 
       },
       generate: function() {
-        _axios.post('/article/generate', {
-          'content': 'helo'
-        }).then(function (response) {
-          console.log('res>>>' + response)
-          this.title = response.data.summary
-          this.abstract = response.data.abstract
-        })
+        // _axios.post('/article/generate', {
+        //   'content': 'helo'
+        // }).then(function (response) {
+        //   console.log('res>>>' + response)
+        //   this.title = response.data.summary
+        //   this.abstract = response.data.abstract
+        // })
+        
+        let fake_data = {
+          "title": "tall old man",
+          "abstract": "A rural guy came to the city to look for a job, finally saw through the colorful world, and finally chose the story of the lawyer profession."
+        }
+        this.title = fake_data.title
+        this.abstract = fake_data.abstract
       }
     }
   }
