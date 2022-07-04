@@ -101,7 +101,7 @@ import _axios from '@/plugins/axios'
       },
       generate: function() {
         _axios.post('/article/generate', {
-          'content': 'helo'
+          'content': this.story
         }).then((response) => {
           this.title = response.data.title
           this.abstract = response.data.summary
