@@ -1,69 +1,64 @@
 <template>
   <v-container>
     <v-row class="text-center">
-
       <v-col
         class="mb-5"
         cols="6"
       >
-          <v-textarea
-            clearable
-            counter
-            rows="16"
-            clear-icon="mdi-close-circle"
-            label="story"
-            outlined
-            no-resize
-            height="440"
-            v-model="story"
-          >
-          
-          </v-textarea>
-          <v-btn
-            elevation="2"
-            @click="generate"
-            >generate
-          </v-btn>
-          <v-btn
-            elevation="2"
-            @click="copytoclipboard"
-          >copy to clipboard
-          </v-btn>
+        <v-textarea
+          v-model="story"
+          clearable
+          counter
+          rows="16"
+          clear-icon="mdi-close-circle"
+          label="story"
+          outlined
+          no-resize
+          height="440"
+        />
+        <v-btn
+          elevation="2"
+          @click="generate"
+        >
+          generate
+        </v-btn>
+        <v-btn
+          elevation="2"
+          @click="copytoclipboard"
+        >
+          copy to clipboard
+        </v-btn>
       </v-col>
-      <v-divider vertical>
-      </v-divider>
-      <v-col
-      >
+      <v-divider vertical />
+      <v-col>
         <v-row>
           <v-col>
             <v-skeleton-loader
-            :loading='loading'
-            :boilerplate="boilerplate"
-            type="list-item-two-line"
-          >
-            <v-textarea
-              value="12345xxxxx"
-              label="title"
-              rows="4"
-              outlined
-              no-resize
-              v-model="title"
+              :loading="loading"
+              :boilerplate="boilerplate"
+              type="list-item-two-line"
             >
-            </v-textarea>
-          </v-skeleton-loader>
+              <v-textarea
+                v-model="title"
+                value="12345xxxxx"
+                label="title"
+                rows="4"
+                outlined
+                no-resize
+              />
+            </v-skeleton-loader>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <v-textarea
+              v-model="abstract"
               value="12345xxxxx"
               rows="9"
               label="asbtract"
               outlined
               no-resize
-              v-model="abstract"
-            >
-            </v-textarea>
+            />
           </v-col>
         </v-row>
         <!-- <v-row>
