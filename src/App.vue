@@ -17,8 +17,8 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        target="_blank"
         text
+        @click="jump2Login"
       >
         <span class="mr-2">login</span>
         <!-- <v-icon>mdi-open-in-new</v-icon> -->
@@ -30,6 +30,21 @@
     </v-main>
   </v-app>
 </template>
+
+<script>
+import router from "./router"
+
+
+export default  ({
+  name: 'App',
+  methods: {
+    jump2Login: () => {
+      router.push('/login')
+    }
+  }
+})
+</script>
+
 
 <style lang="scss">
 #app {
