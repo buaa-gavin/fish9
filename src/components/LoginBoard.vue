@@ -126,6 +126,9 @@ import router from '@/router'
           //
           // wait for response
           alert('login successful')
+          localStorage.setItem('TOKEN', 'happy-day')
+          localStorage.setItem('username', 'hapy-xiaoming')
+          this.$bus.$emit('loginSuccessful')
           router.push('/')
         }
       },

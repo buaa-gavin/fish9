@@ -6,8 +6,10 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-new Vue({
+Vue.prototype.$bus = new Vue({
   vuetify,
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+})
+
+Vue.prototype.$bus.$mount('#app')

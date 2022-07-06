@@ -22,12 +22,26 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue')
+  },
+  {
+    path: '/favorite',
+    name: 'favorite',
+    component: () => import('@/views/AboutView.vue')
   }
 ]
 
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
+
+
+router.beforeEach(async(to, from, next) => {
+  if (to.name !== 'login' && !localStorage.getItem('TOKEN')) {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
 })
 
 export default router

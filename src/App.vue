@@ -16,13 +16,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        text
-        @click="jump2Login"
-      >
-        <span class="mr-2">login</span>
-        <!-- <v-icon>mdi-open-in-new</v-icon> -->
-      </v-btn>
+      <UserStatus/>
     </v-app-bar>
 
     <v-main>
@@ -33,15 +27,14 @@
 
 <script>
 import router from "./router"
+import UserStatus from '@/components/UserStatus.vue'
 
 
 export default  ({
   name: 'App',
-  methods: {
-    jump2Login: () => {
-      router.push('/login')
-    }
-  }
+  components: {
+    UserStatus,
+  },
 })
 </script>
 
