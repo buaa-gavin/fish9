@@ -10,6 +10,7 @@
           src="https://picgo-1301039224.cos.ap-beijing.myqcloud.com/202207011510098.png"
           transition="scale-transition"
           width="100"
+          @click="jump2Intro"
         />
 
       </div>
@@ -35,6 +36,13 @@ export default  ({
   components: {
     UserStatus,
   },
+  methods: {
+    jump2Intro: () => {
+      if (router.currentRoute.name !== 'intro') {
+        router.push({ name: 'intro' } )
+      }
+    }
+  }
 })
 </script>
 

@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import IntroView from '@/views/IntroView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'intro',
+    component: IntroView
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
@@ -37,8 +43,9 @@ const router = new VueRouter({
 
 
 router.beforeEach(async(to, from, next) => {
-  if (to.name !== 'login' && !localStorage.getItem('TOKEN')) {
-    next({ name: 'login' })
+  let notAuthen = ['login', 'intro']
+  if (!notAuthen.includes(to.name) && !localStorage.getItem('TOKEN')) {
+    next( { name: 'login' } )
   } else {
     next()
   }
