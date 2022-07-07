@@ -3,7 +3,8 @@
     <v-col>
       <v-row no-gutters>
         <v-col>
-          <span class="introword"> Intelligent article extractor </span>
+          <span class="introword"> FISH9 未来创作 </span>
+          <div>AI赋能,革新写作方式</div>
         </v-col>
       </v-row>
       <v-row> </v-row>

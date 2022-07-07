@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div class="aboutTitle">This is an about page</div>
     <div v-for="(item, index) in favor" :key="index">
-      <like-card :likes="item"></like-card>
+      <like-card :likes="item" @update="update"></like-card>
     </div>
   </div>
 </template>
@@ -13,6 +13,7 @@ import LikeCard from "../components/LikeCard.vue";
 import _axios from "@/plugins/axios";
 export default {
   name: "HomeView",
+
   data() {
     return {
       favor: [
@@ -24,13 +25,22 @@ export default {
       ],
     };
   },
-//   components: {
-//     LikeCard,
-//   },
+  components: {
+    LikeCard,
+  },
+  methods: {
+    loadData: function () {
+      _axios.get("/article").then((response) => {
+        this.favor = response.data;
+      });
+    },
+    update: function () {
+      this.loadData();
+      console.log("up");
+    },
+  },
   mounted() {
-    _axios.get("/article").then((response) => {
-      this.favor = response.data;
-    });
+    this.loadData();
   },
 };
 </script>
