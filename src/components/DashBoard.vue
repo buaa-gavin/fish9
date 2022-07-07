@@ -93,17 +93,8 @@ import _axios from '@/plugins/axios'
         'keyword2',
         'keyword3',
         'keyword4',
-        'keyword1',
-        'keyword2',
-        'keyword3',
-        'keyword4',
       ]
     }),
-    watch: {
-      story: function (newInput) {
-        console.log('new>>>>' + newInput)
-      }
-    },
     methods: {
       copytoclipboard: function() {
         let copyData = "title: " + this.title + "\n"
@@ -119,7 +110,14 @@ import _axios from '@/plugins/axios'
         }).then((response) => {
           this.title = response.data.title
           this.abstract = response.data.summary
+          this.keywords = response.data.keywords
           this.loading=false
+        }).catch((error) => {
+          this.title = 'input is too simple'
+          this.abstract = 'please try more words'
+          this.keywords = []
+          alert('input is too simple')
+          this.loading = false
         })
         
       }

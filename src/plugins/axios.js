@@ -1,5 +1,6 @@
 "use strict";
 
+import router from "@/router";
 import axios from "axios";
 
 // Full config:  https://github.com/axios/axios#request-config
@@ -19,6 +20,13 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
+    if (localStorage.getItem('TOKEN')) {
+      config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('TOKEN')
+    } else {
+      if (router.currentRoute.name !== 'login') {
+        router.push({ name: 'login' })
+      }
+    }
     return config;
   },
   function(error) {

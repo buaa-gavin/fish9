@@ -41,6 +41,10 @@ export default {
     email: "",
     snackbar_login:false,
     snackbar_register:false,
+    registerLimit: {
+      'username_length': 3,
+      'password_length': 3,
+    }
   }),
   watch: {
     password: function (newInput) {
@@ -52,8 +56,10 @@ export default {
       if (!this.register) {
         this.register = true;
       } else {
-        let _username = this.username.length >= 3 && this.verifyAlpNum(this.username);
-        let _password = this.password.length >= 8 && this.verifyAlpNum(this.password);
+        let _username = this.username.length >= this.registerLimit.username_length 
+                            && this.verifyAlpNum(this.username);
+        let _password = this.password.length >= this.registerLimit.password_length 
+                            && this.verifyAlpNum(this.password);
         let _password2 = this.password == this.password2;
         let ok = _username && _password && _password2;
 
@@ -86,11 +92,15 @@ export default {
         //
         // wait for response
         // alert("login successful");
-        localStorage.setItem("TOKEN", "happy-day");
-        localStorage.setItem("username", "hapy-xiaoming");
-        this.$bus.$emit("loginSuccessful");
-        // this.snackbar_login=true;
-        router.push("/");
+        _axios.post('/token/', {
+          'username': this.username,
+          'password': this.password,
+        }).then((response) => {
+          localStorage.setItem('TOKEN', response.data.access)
+          localStorage.setItem('username', this.username)
+          this.$bus.$emit('loginSuccessful')
+          router.push({ name: 'home' })
+        })
       }
     },
   },
