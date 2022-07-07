@@ -51,41 +51,14 @@
 import _axios from "@/plugins/axios";
 export default {
   name: "LikeCard",
+  props: ["likes"],
 
   data: () => ({
     show: false,
     dialog: false,
-    title: "标题哦",
-    abstract: "摘要哦",
-    content: "正文哦",
+    title: this.likes.title,
+    abstract: this.likes.summary,
+    content: this.likes.content,
   }),
-  watch: {
-    story: function (newInput) {
-      console.log("new>>>>" + newInput);
-    },
-  },
-  methods: {
-    copytoclipboard: function () {
-      let copyData = "title: " + this.title + "\n" + "abstract: " + this.abstract + "\n" + "body: " + this.body + "\n";
-      navigator.clipboard.writeText(copyData);
-    },
-    save: function () {
-      console.log(this.title);
-      console.log(this.abstract);
-      console.log(this.content);
-    },
-    generate: function () {
-      (this.loading = true),
-        _axios
-          .post("/article/generate", {
-            content: this.story,
-          })
-          .then((response) => {
-            this.title = response.data.title;
-            this.abstract = response.data.summary;
-            this.loading = false;
-          });
-    },
-  },
 };
 </script>

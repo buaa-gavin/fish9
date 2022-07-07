@@ -43,7 +43,7 @@ export default {
   methods: {
     jump2Note: () => {
       if (router.currentRoute.name != "home") {
-        router.push("/");
+        router.push("/home");
       }
     },
     jump2Login: () => {

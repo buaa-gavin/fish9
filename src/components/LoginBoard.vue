@@ -90,7 +90,7 @@ export default {
         localStorage.setItem("username", "hapy-xiaoming");
         this.$bus.$emit("loginSuccessful");
         // this.snackbar_login=true;
-        router.push("/");
+        router.push("/home");
       }
     },
   },
