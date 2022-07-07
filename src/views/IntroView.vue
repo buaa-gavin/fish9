@@ -14,7 +14,7 @@
     <v-img src="../../public/wave.svg" fill-height width="100vw">
       <v-col>
         <div class="subintroword">开启全智创作</div>
-        <v-btn rounded x-large @click="jump2Home"> <v-icon dark> mdi-pencil </v-icon>立即使用 </v-btn>
+        <v-btn rounded x-large @click="jump2Home"> <v-icon dark fab> mdi-pencil </v-icon>立即使用 </v-btn>
       </v-col>
     </v-img>
   </v-container>

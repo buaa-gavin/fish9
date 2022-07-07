@@ -73,16 +73,21 @@ export default {
         this.snackbar_null = true;
         return;
       } else {
-        this.loading = true;
-        _axios
-          .post("/article/generate", {
-            content: this.story,
-          })
-          .then((response) => {
-            this.title = response.data.title;
-            this.abstract = response.data.summary;
-            this.loading = false;
-          });
+        this.loading=true,
+        _axios.post('/article/generate', {
+          'content': this.story
+        }).then((response) => {
+          this.title = response.data.title
+          this.abstract = response.data.summary
+          this.keywords = response.data.keywords
+          this.loading=false
+        }).catch((error) => {
+          this.title = 'input is too simple'
+          this.abstract = 'please try more words'
+          this.keywords = []
+          alert('input is too simple')
+          this.loading = false
+        })
       }
     },
     save: function () {

@@ -56,9 +56,15 @@ export default {
   data: () => ({
     show: false,
     dialog: false,
-    title: this.likes.title,
-    abstract: this.likes.summary,
-    content: this.likes.content,
+    title: null,
+    abstract: null,
+    content: null,
   }),
+  mounted() {
+    console.log(this.likes);
+    // this.title = this.likes.title;
+    // this.abstract = this.likes.summary;
+    // this.content = this.likes.content;
+  },
 };
 </script>

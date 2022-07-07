@@ -24,9 +24,9 @@ export default {
       ],
     };
   },
-  components: {
-    LikeCard,
-  },
+//   components: {
+//     LikeCard,
+//   },
   mounted() {
     _axios.get("/article").then((response) => {
       this.favor = response.data;

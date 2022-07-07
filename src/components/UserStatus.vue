@@ -58,6 +58,7 @@ export default {
     },
     logout: function () {
       this.isLogin = false;
+      localStorage.removeItem('username')
       localStorage.removeItem("TOKEN");
       router.push("/login");
     },
