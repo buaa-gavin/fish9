@@ -5,8 +5,8 @@
         <v-container>
           <!-- <v-snackbar v-model="snackbar_login" timeout="1500"> 登录成功 </v-snackbar>
           <v-snackbar v-model="snackbar_register" timeout="1500"> 注册成功 </v-snackbar> -->
-          <div v-if="register" class="loginbar">Register</div>
-          <div v-else class="loginbar">Login</div>
+          <div v-if="register" class="loginbar">注册</div>
+          <div v-else class="loginbar">登录</div>
           <v-text-field v-show="!register" v-model="username" label="Username" required></v-text-field>
           <v-text-field v-show="register" v-model="username" label="Username" hint="at least 3 characters, combined of numbers and letters." required></v-text-field>
 
@@ -19,8 +19,9 @@
           </div>
         </v-container>
         <div>
-          <v-btn color="blue" @click="loginHandler"> Login </v-btn>
-          <v-btn @click="registerHanlder"> register </v-btn>
+          <v-btn large rounded color="blue" @click="loginHandler"> 登录 </v-btn>
+          <span style="margin-left: 20px; margin-right: 20px"></span>
+          <v-btn large rounded @click="registerHanlder"> 注册 </v-btn>
         </div>
       </v-col>
     </v-row>
@@ -39,12 +40,12 @@ export default {
     password2: "",
     register: false,
     email: "",
-    snackbar_login:false,
-    snackbar_register:false,
+    snackbar_login: false,
+    snackbar_register: false,
     registerLimit: {
-      'username_length': 3,
-      'password_length': 3,
-    }
+      username_length: 3,
+      password_length: 3,
+    },
   }),
   watch: {
     password: function (newInput) {
@@ -56,10 +57,8 @@ export default {
       if (!this.register) {
         this.register = true;
       } else {
-        let _username = this.username.length >= this.registerLimit.username_length 
-                            && this.verifyAlpNum(this.username);
-        let _password = this.password.length >= this.registerLimit.password_length 
-                            && this.verifyAlpNum(this.password);
+        let _username = this.username.length >= this.registerLimit.username_length && this.verifyAlpNum(this.username);
+        let _password = this.password.length >= this.registerLimit.password_length && this.verifyAlpNum(this.password);
         let _password2 = this.password == this.password2;
         let ok = _username && _password && _password2;
 
@@ -92,15 +91,17 @@ export default {
         //
         // wait for response
         // alert("login successful");
-        _axios.post('/token/', {
-          'username': this.username,
-          'password': this.password,
-        }).then((response) => {
-          localStorage.setItem('TOKEN', response.data.access)
-          localStorage.setItem('username', this.username)
-          this.$bus.$emit('loginSuccessful')
-          router.push({ name: 'home' })
-        })
+        _axios
+          .post("/token/", {
+            username: this.username,
+            password: this.password,
+          })
+          .then((response) => {
+            localStorage.setItem("TOKEN", response.data.access);
+            localStorage.setItem("username", this.username);
+            this.$bus.$emit("loginSuccessful");
+            router.push({ name: "home" });
+          });
       }
     },
   },
@@ -108,8 +109,7 @@ export default {
 </script>
 <style>
 .loginbar {
-  color: blue;
-  font-size: 150%;
-  font-family: monospace;
+  color: #1976d2;
+  font-size: 200%;
 }
 </style>

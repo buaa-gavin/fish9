@@ -1,24 +1,26 @@
 <template>
   <v-container>
     <template>
-      <v-card class="mx-auto" max-width="40vw">
-        <v-card-subtitle> time </v-card-subtitle>
+      <v-card class="mx-auto" max-width="45vw">
+        <v-card-subtitle> {{ likes.created.substring(0, 10) }} {{likes.created.substring(11, 19)}}</v-card-subtitle>
         <v-divider></v-divider>
         <v-card-subtitle> {{ likes.title }} </v-card-subtitle>
         <v-divider></v-divider>
         <v-card-text> {{ likes.summary }} </v-card-text>
 
         <v-card-actions>
-          <v-dialog v-model="dialog" width="600px">
+          <v-dialog v-model="dialog" width="60vw">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="movedata"> 编辑 </v-btn>
             </template>
             <v-card>
               <v-card-title>修改内容</v-card-title>
               <v-divider></v-divider>
-              <v-textarea label="标题" rows="2" v-model="title"></v-textarea>
-              <v-textarea label="摘要" v-model="summary"></v-textarea>
-              <v-textarea label="正文" v-model="content"></v-textarea>
+              <div style="margin:20px">
+                <v-textarea label="标题" rows="2" v-model="title"></v-textarea>
+                <v-textarea label="摘要" v-model="summary"></v-textarea>
+                <v-textarea label="正文" v-model="content"></v-textarea>
+              </div>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue" text @click="save">save</v-btn>

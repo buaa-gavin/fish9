@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn v-if="!isLogin" text @click="jump2Login">
-      <span class="mr-2">login</span>
+      <span class="mr-2">登录</span>
     </v-btn>
     <div v-else>
       <v-tooltip bottom>
@@ -60,7 +60,7 @@ export default {
       this.isLogin = false;
       localStorage.removeItem('username')
       localStorage.removeItem("TOKEN");
-      router.push("/login");
+      router.push("/home");
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <div class="aboutTitle">This is an about page</div>
+    <div class="aboutTitle">管理收藏内容</div>
     <div v-for="(item, index) in favor" :key="index">
       <like-card :likes="item" @update="update"></like-card>
     </div>
@@ -44,3 +44,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.aboutTitle{
+    font-size: 180%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+</style>
