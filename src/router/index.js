@@ -35,7 +35,7 @@ const router = new VueRouter({
 
 
 router.beforeEach(async(to, from, next) => {
-  let notAuthen = ['login', 'intro']
+  let notAuthen = ['login', 'intro', 'home']
   if (!notAuthen.includes(to.name) && !localStorage.getItem('TOKEN')) {
     next( { name: 'login' } )
   } else {

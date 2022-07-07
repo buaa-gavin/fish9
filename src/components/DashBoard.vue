@@ -40,6 +40,7 @@
 
 <script>
 import _axios from "@/plugins/axios";
+import router from '@/router';
 export default {
   name: "DashBoard",
 
@@ -93,6 +94,9 @@ export default {
       }
     },
     save: function () {
+      if (!localStorage.getItem('TOKEN')) {
+        router.push({ name: 'login' })
+      }
         console.log(this.title)
     },
   },
