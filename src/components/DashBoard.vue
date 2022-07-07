@@ -61,16 +61,15 @@
             />
           </v-col>
         </v-row>
-        <!-- <v-row>
-          <v-col>
-            <v-textarea
-              value="12345xxxxx"
-              label="body"
-              v-model="body"
-            >
-            </v-textarea>
-          </v-col>
-        </v-row> -->
+        <v-container>
+          <v-chip-group column>
+            <v-chip
+              v-for="keyword in keywords"
+              :key="keyword">
+              {{  keyword  }}
+            </v-chip>
+          </v-chip-group>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -89,6 +88,16 @@ import _axios from '@/plugins/axios'
       loading:false,
       boilerplate:true,
       transition: 'scale-transition',
+      keywords: [
+        'keyword1',
+        'keyword2',
+        'keyword3',
+        'keyword4',
+        'keyword1',
+        'keyword2',
+        'keyword3',
+        'keyword4',
+      ]
     }),
     watch: {
       story: function (newInput) {
