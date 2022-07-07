@@ -5,9 +5,11 @@
         <v-snackbar v-model="snackbar_long" timeout="2000">字数过长 </v-snackbar>
         <v-snackbar v-model="snackbar_null" timeout="2000">不能为空 </v-snackbar>
         <v-textarea v-model="story" clearable counter rows="16" clear-icon="mdi-close-circle" label="story" outlined no-resize height="440" :rules="rules" />
-        <v-select :items="items" outlined label="选择标题风格"></v-select>
-        <v-btn elevation="2" @click="generate"> generate </v-btn>
-        <v-btn elevation="2" @click="copytoclipboard"> copy to clipboard </v-btn>
+        <v-container>
+          <v-select :items="items" outlined label="选择标题风格"></v-select>
+          <v-btn elevation="2" @click="generate"> generate </v-btn>
+          <v-btn elevation="2" @click="copytoclipboard"> copy to clipboard </v-btn>
+        </v-container>
       </v-col>
       <v-divider vertical />
       <v-col>
@@ -28,9 +30,9 @@
               {{ keyword }}
             </v-chip>
         </v-container>
-        <v-row>
+        <v-container>
           <v-btn elevation="2" @click="save"> 收藏 </v-btn>
-        </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
