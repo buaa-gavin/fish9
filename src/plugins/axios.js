@@ -22,11 +22,7 @@ _axios.interceptors.request.use(
     // Do something before request is sent
     if (localStorage.getItem('TOKEN')) {
       config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('TOKEN')
-    } else {
-      if (router.currentRoute.name !== 'login') {
-        router.push({ name: 'login' })
-      }
-    }
+    } 
     return config;
   },
   function(error) {

@@ -70,11 +70,6 @@ export default {
     snackbar_null: false,
     model_type: "policy",
   }),
-  watch: {
-    story: function (newInput) {
-      console.log("new>>>>" + newInput);
-    },
-  },
   methods: {
     copytoclipboard: function () {
       let copyData = "标题: " + this.title + "\n" + "摘要: " + this.abstract + "\n" + "正文: " + this.story + "\n";
