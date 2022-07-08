@@ -36,7 +36,7 @@ export default {
     },
     update: function () {
       this.loadData();
-      console.log("up");
+      // console.log("up");
     },
   },
   mounted() {

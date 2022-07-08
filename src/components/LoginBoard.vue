@@ -49,7 +49,7 @@ export default {
   }),
   watch: {
     password: function (newInput) {
-      console.log("<<<<<<" + this.verifyAlpNum(this.password));
+      // console.log("<<<<<<" + this.verifyAlpNum(this.password));
     },
   },
   methods: {

@@ -90,7 +90,7 @@ export default {
     },
     generate: function () {
       this.type_trans();
-      console.log(this.model_type);
+      // console.log(this.model_type);
       if (this.story.length > 2000) {
         this.snackbar_long = true;
         return;
