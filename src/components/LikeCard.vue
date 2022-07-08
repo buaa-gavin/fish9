@@ -2,7 +2,7 @@
   <v-container>
     <template>
       <v-card class="mx-auto" max-width="45vw">
-        <v-card-subtitle> {{ likes.created.substring(0, 10) }} {{likes.created.substring(11, 19)}}</v-card-subtitle>
+        <v-card-subtitle> {{ likes.created.substring(0, 10) }} {{ likes.created.substring(11, 19) }}</v-card-subtitle>
         <v-divider></v-divider>
         <v-card-subtitle> {{ likes.title }} </v-card-subtitle>
         <v-divider></v-divider>
@@ -16,7 +16,7 @@
             <v-card>
               <v-card-title>修改内容</v-card-title>
               <v-divider></v-divider>
-              <div style="margin:20px">
+              <div style="margin: 20px">
                 <v-textarea label="标题" rows="2" v-model="title"></v-textarea>
                 <v-textarea label="摘要" v-model="summary"></v-textarea>
                 <v-textarea label="正文" v-model="content"></v-textarea>
@@ -28,6 +28,8 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+          <span style="margin-left: 1vw"></span>
+          <v-btn color="error" dark @click="deletedata"> 删除 </v-btn>
 
           <v-spacer></v-spacer>
 
@@ -62,6 +64,13 @@ export default {
     content: null,
   }),
   methods: {
+    deletedata: function () {
+      _axios
+        .delete("/article/" + this.likes.id + "/")
+        .then((response) => {
+          this.$emit("update");
+        });
+    },
     movedata: function () {
       this.title = this.likes.title;
       this.summary = this.likes.summary;

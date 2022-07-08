@@ -4,6 +4,7 @@
       <v-col class="mb-5" cols="8">
         <v-snackbar v-model="snackbar_long" timeout="2000">字数过长 </v-snackbar>
         <v-snackbar v-model="snackbar_null" timeout="2000">字数太短 </v-snackbar>
+        <v-snackbar v-model="snackbar_favor" timeout="2000">收藏成功 </v-snackbar>
         <v-textarea v-model="story" clearable counter rows="16" clear-icon="mdi-close-circle" label="请输入文章" outlined no-resize height="440" :rules="rules" />
         <v-container>
           <v-row align="center" justify="space-around">
@@ -68,6 +69,7 @@ export default {
     keywords: ["关键词", "在此", "生成"],
     snackbar_long: false,
     snackbar_null: false,
+    snackbar_favor: false,
     model_type: "policy",
   }),
   methods: {
@@ -121,11 +123,15 @@ export default {
       if (!localStorage.getItem("TOKEN")) {
         router.push({ name: "login" });
       } else {
-        _axios.post("/article/", {
-          title: this.title,
-          summary: this.abstract,
-          content: this.story,
-        });
+        _axios
+          .post("/article/", {
+            title: this.title,
+            summary: this.abstract,
+            content: this.story,
+          })
+          .then((response) => {
+            this.snackbar_favor = true;
+          });
       }
     },
   },

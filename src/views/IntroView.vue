@@ -14,7 +14,7 @@
       </v-row>
       <v-row> </v-row>
     </v-col>
-    <v-col>
+    <v-col style="padding-left:3vw">
       <v-img src="../../public/index.jpg" width="35vw"></v-img>
     </v-col>
     <v-img src="../../public/wave.svg" fill-height width="100vw">
