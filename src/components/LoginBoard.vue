@@ -44,7 +44,7 @@ export default {
     snackbar_register: false,
     registerLimit: {
       username_length: 3,
-      password_length: 3,
+      password_length: 8,
     },
   }),
   watch: {
