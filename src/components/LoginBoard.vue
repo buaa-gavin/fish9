@@ -75,7 +75,16 @@ export default {
         // wait for response
         // alert("register successfully");
         // this.snackbar_register=true;
-        this.register = false;
+        _axios.post('/user/', {
+          'username': this.username,
+          'password': this.password,
+          'email': this.email
+        }).then((response) => {
+          alert('注册成功')
+          this.register = false
+        }).catch((error) => {
+          alert('用户已存在')
+        })
       }
     },
     verifyAlpNum: function (str) {
