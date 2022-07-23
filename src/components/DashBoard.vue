@@ -5,7 +5,13 @@
         <v-snackbar v-model="snackbar_long" timeout="2000">字数过长 </v-snackbar>
         <v-snackbar v-model="snackbar_null" timeout="2000">字数太短 </v-snackbar>
         <v-snackbar v-model="snackbar_favor" timeout="2000">收藏成功 </v-snackbar>
-        <v-textarea v-model="story" clearable counter rows="16" clear-icon="mdi-close-circle" label="请输入文章" outlined no-resize height="440" :rules="rules" />
+        <v-row class="px-3 py-3">
+          <v-file-input placeholder="从txt导入" truncate-length="10" prepend-icon="mdi-text-box" outlined dense v-model="upLoadTxt" @change="importTxt()" chips> </v-file-input>
+          <span style="margin-left:2vw"></span>
+          <v-file-input placeholder="从word导入" truncate-length="10" prepend-icon="mdi-file-word" outlined dense v-model="upLoadWord" @change="importWord()" chips> </v-file-input>
+        </v-row>
+
+        <v-textarea v-model="story" clearable counter rows="14" clear-icon="mdi-close-circle" label="请输入文章" outlined no-resize height="400" :rules="rules" />
         <v-container>
           <v-row align="center" justify="space-around">
             <v-select dense v-model="model_type" :items="items" outlined label="选择标题风格"></v-select>
@@ -73,6 +79,9 @@ import router from "@/router";
 import JSZipUtils from "jszip-utils";
 import JSZip from "pizzip";
 import Docxtemplater from "docxtemplater";
+import { extractRawText } from "mammoth/mammoth.browser";
+// import  mammoth from "mammoth";
+import { mdiFileWord, mdiTextBox } from "@mdi/js";
 export default {
   name: "DashBoard",
   data: () => ({
@@ -91,8 +100,31 @@ export default {
     snackbar_favor: false,
     model_type: "policy",
     dialog: false,
+    upLoadTxt: null,
+    upLoadWord: null,
   }),
   methods: {
+    importTxt: function () {
+      if (this.upLoadTxt !== null) {
+        let reader = new FileReader();
+        reader.readAsText(this.upLoadTxt);
+        reader.onload = () => {
+          this.story = reader.result;
+        };
+      }
+    },
+    importWord: function () {
+      if (this.upLoadWord !== null) {
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(this.upLoadWord);
+        reader.onload = () => {
+          const data = reader.result;
+          extractRawText({ arrayBuffer: data }).then((r) => {
+            this.story = r.value;
+          });
+        };
+      }
+    },
     savetxt: function () {
       let data = this.title + "\n\n" + this.abstract + "\n\n" + this.story;
       let str = new Blob([data], { type: "text/plain;charset=utf-8" });
