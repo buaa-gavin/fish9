@@ -13,7 +13,24 @@
           <v-row align="center" justify="space-around">
             <span></span>
             <v-btn large depressed color="primary" elevation="2" @click="generate"> 生成 </v-btn>
-            <v-btn large depressed elevation="2" @click="copytoclipboard"> 复制到剪切板 </v-btn>
+            <v-dialog v-model="dialog" width="30vw">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn large depressed elevation="2" v-bind="attrs" v-on="on"> 保存结果 </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>保存内容</v-card-title>
+                <v-divider></v-divider>
+                <div style="margin: 20px">
+                  <v-btn color="blue" text @click="copytoclipboard">复制到剪切板</v-btn>
+                  <v-btn color="blue" text @click="savetxt">导出到txt</v-btn>
+                  <v-btn color="blue" text @click="saveword">导出到word</v-btn>
+                </div>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="grey" text @click="dialog = false">取消</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-btn large depressed color="primary" elevation="2" @click="save"> 收藏 </v-btn>
             <span></span>
           </v-row>
@@ -53,9 +70,11 @@
 <script>
 import _axios from "@/plugins/axios";
 import router from "@/router";
+import JSZipUtils from "jszip-utils";
+import JSZip from "pizzip";
+import Docxtemplater from "docxtemplater";
 export default {
   name: "DashBoard",
-
   data: () => ({
     story: "",
     title: "待生成标题",
@@ -71,11 +90,46 @@ export default {
     snackbar_null: false,
     snackbar_favor: false,
     model_type: "policy",
+    dialog: false,
   }),
   methods: {
+    savetxt: function () {
+      let data = this.title + "\n\n" + this.abstract + "\n\n" + this.story;
+      let str = new Blob([data], { type: "text/plain;charset=utf-8" });
+      saveAs(str, this.title + `.txt`);
+      this.dialog = false;
+    },
+    saveword: function () {
+      const _this = this;
+      JSZipUtils.getBinaryContent("template.docx", function (error, content) {
+        if (error) {
+          throw error;
+        }
+        let zip = new JSZip(content);
+        let doc = new Docxtemplater().loadZip(zip);
+        doc.setData({
+          title: _this.title,
+          abstract: _this.abstract,
+          content: _this.story,
+        });
+        try {
+          doc.render();
+        } catch (error) {
+          this.$message.error("导出报表失败");
+          throw error;
+        }
+        let out = doc.getZip().generate({
+          type: "blob",
+          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+        saveAs(out, _this.title + ".docx");
+      });
+      this.dialog = false;
+    },
     copytoclipboard: function () {
       let copyData = "标题: " + this.title + "\n" + "摘要: " + this.abstract + "\n" + "正文: " + this.story + "\n";
-      navigator.clipboard.writeText(copyData)
+      navigator.clipboard.writeText(copyData);
+      this.dialog = false;
     },
     type_trans: function () {
       if (this.model_type == "政治新闻标题") {
@@ -134,30 +188,30 @@ export default {
           });
       }
     },
-  // copyToClipboard: (textToCopy) => {
-  //     // navigator clipboard 需要https等安全上下文
-  //     if (navigator.clipboard && window.isSecureContext) {
-  //         // navigator clipboard 向剪贴板写文本
-  //         return navigator.clipboard.writeText(textToCopy);
-  //     } else {
-  //         // 创建text area
-  //         let textArea = document.createElement("textarea");
-  //         textArea.value = textToCopy;
-  //         // 使text area不在viewport，同时设置不可见
-  //         textArea.style.position = "absolute";
-  //         textArea.style.opacity = 0;
-  //         textArea.style.left = "-999999px";
-  //         textArea.style.top = "-999999px";
-  //         document.body.appendChild(textArea);
-  //         textArea.focus();
-  //         textArea.select();
-  //         return new Promise((res, rej) => {
-  //             // 执行复制命令并移除文本框
-  //             document.execCommand('copy') ? res() : rej();
-  //             textArea.remove();
-  //         });
-  //     }
-  // }
+    // copyToClipboard: (textToCopy) => {
+    //     // navigator clipboard 需要https等安全上下文
+    //     if (navigator.clipboard && window.isSecureContext) {
+    //         // navigator clipboard 向剪贴板写文本
+    //         return navigator.clipboard.writeText(textToCopy);
+    //     } else {
+    //         // 创建text area
+    //         let textArea = document.createElement("textarea");
+    //         textArea.value = textToCopy;
+    //         // 使text area不在viewport，同时设置不可见
+    //         textArea.style.position = "absolute";
+    //         textArea.style.opacity = 0;
+    //         textArea.style.left = "-999999px";
+    //         textArea.style.top = "-999999px";
+    //         document.body.appendChild(textArea);
+    //         textArea.focus();
+    //         textArea.select();
+    //         return new Promise((res, rej) => {
+    //             // 执行复制命令并移除文本框
+    //             document.execCommand('copy') ? res() : rej();
+    //             textArea.remove();
+    //         });
+    //     }
+    // }
   },
 };
 </script>

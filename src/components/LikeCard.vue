@@ -23,13 +23,32 @@
               </div>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue" text @click="save">save</v-btn>
-                <v-btn color="grey" text @click="dialog = false">cancel</v-btn>
+                <v-btn color="blue" text @click="save">保存</v-btn>
+                <v-btn color="grey" text @click="dialog = false">取消</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
           <span style="margin-left: 1vw"></span>
           <v-btn color="error" dark @click="deletedata"> 删除 </v-btn>
+          <span style="margin-left: 1vw"></span>
+          <v-dialog v-model="savedialog" width="30vw">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="success" dark v-bind="attrs" v-on="on"> 保存内容 </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>保存内容</v-card-title>
+              <v-divider></v-divider>
+              <div style="margin: 20px">
+                <v-btn color="blue" text @click="copytoclipboard">复制到剪切板</v-btn>
+                <v-btn color="blue" text @click="savetxt">导出到txt</v-btn>
+                <v-btn color="blue" text @click="saveword">导出到word</v-btn>
+              </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey" text @click="savedialog = false">取消</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
 
           <v-spacer></v-spacer>
 
@@ -52,6 +71,9 @@
 
 <script>
 import _axios from "@/plugins/axios";
+import JSZipUtils from "jszip-utils";
+import JSZip from "pizzip";
+import Docxtemplater from "docxtemplater";
 export default {
   name: "LikeCard",
   props: ["likes"],
@@ -59,17 +81,54 @@ export default {
   data: () => ({
     show: false,
     dialog: false,
+    savedialog: false,
     title: null,
     summary: null,
     content: null,
   }),
   methods: {
-    deletedata: function () {
-      _axios
-        .delete("/article/" + this.likes.id + "/")
-        .then((response) => {
-          this.$emit("update");
+    savetxt: function () {
+      let data = this.likes.title + "\n\n" + this.likes.summary + "\n\n" + this.likes.content;
+      let str = new Blob([data], { type: "text/plain;charset=utf-8" });
+      saveAs(str, this.likes.title + `.txt`);
+      this.savedialog = false;
+    },
+    saveword: function () {
+      const _this = this;
+      JSZipUtils.getBinaryContent("template.docx", function (error, content) {
+        if (error) {
+          throw error;
+        }
+        let zip = new JSZip(content);
+        let doc = new Docxtemplater().loadZip(zip);
+        doc.setData({
+          title: _this.likes.title,
+          abstract: _this.likes.summary,
+          content: _this.likes.content,
         });
+        try {
+          doc.render();
+        } catch (error) {
+          this.$message.error("导出报表失败");
+          throw error;
+        }
+        let out = doc.getZip().generate({
+          type: "blob",
+          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+        saveAs(out, _this.likes.title + ".docx");
+      });
+      this.savedialog = false;
+    },
+    copytoclipboard: function () {
+      let copyData = "标题: " + this.likes.title + "\n" + "摘要: " + this.likes.summary + "\n" + "正文: " + this.likes.content + "\n";
+      navigator.clipboard.writeText(copyData);
+      this.savedialog = false;
+    },
+    deletedata: function () {
+      _axios.delete("/article/" + this.likes.id + "/").then((response) => {
+        this.$emit("update");
+      });
     },
     movedata: function () {
       this.title = this.likes.title;
