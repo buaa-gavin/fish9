@@ -10,6 +10,7 @@
           <div class="introFeature">自动生成标题、摘要、关键字</div>
           <div class="introFeature">一键收藏,轻松管理作品</div>
           <div class="introFeature">多风格标题,为多平台而来</div>
+          <div class="introFeature">支持word与txt的导入导出</div>
         </v-col>
       </v-row>
       <v-row> </v-row>

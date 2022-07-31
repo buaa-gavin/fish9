@@ -7,7 +7,7 @@
         <v-snackbar v-model="snackbar_favor" timeout="2000">收藏成功 </v-snackbar>
         <v-row class="px-3 py-3">
           <v-file-input placeholder="从txt导入" truncate-length="10" prepend-icon="mdi-text-box" outlined dense v-model="upLoadTxt" @change="importTxt()" chips> </v-file-input>
-          <span style="margin-left:2vw"></span>
+          <span style="margin-left: 2vw"></span>
           <v-file-input placeholder="从word导入" truncate-length="10" prepend-icon="mdi-file-word" outlined dense v-model="upLoadWord" @change="importWord()" chips> </v-file-input>
         </v-row>
 
@@ -54,7 +54,7 @@
         <v-row>
           <v-col>
             <v-skeleton-loader :loading="loading" :boilerplate="boilerplate" type="list-item-three-line">
-              <v-textarea v-model="abstract" value="12345xxxxx" rows="9" label="生成摘要" outlined no-resize />
+              <v-textarea v-model="abstract" value="12345xxxxx" rows="10" label="生成摘要" outlined no-resize />
             </v-skeleton-loader>
           </v-col>
         </v-row>
@@ -217,6 +217,13 @@ export default {
           })
           .then((response) => {
             this.snackbar_favor = true;
+          })
+          .catch((error) => {
+            this.title = "输入太短";
+            this.abstract = "请输入更多文字";
+            this.keywords = null;
+            this.snackbar_null = true;
+            this.loading = false;
           });
       }
     },
