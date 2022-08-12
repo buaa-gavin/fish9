@@ -12,8 +12,8 @@ let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
-  //baseURL: "http://152.136.187.11:8081/api"
-  baseURL: "https://apiv2.pigeony.xyz/api"
+  baseURL: "http://175.27.248.125:8090/api"
+//   baseURL: "https://apiv2.pigeony.xyz/api"
 };
 
 const _axios = axios.create(config);
