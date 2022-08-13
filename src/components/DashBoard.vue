@@ -186,7 +186,7 @@ export default {
       } else {
         (this.loading = true),
           _axios
-            .post("/article/generate", {
+            .post("https://apiv3.pigeony.xyz/api/article/generate/", {
               model_type: this.model_type,
               content: this.story,
             })
